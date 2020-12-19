@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/index.js'],
-  coverageReporter: ['json', 'lcov', 'text'],
+  coverageReporters: ['json', 'lcov', 'text'],
   coverageThreshold: {
     global: {
       branches: 70,
@@ -11,18 +11,21 @@ module.exports = {
       statements: 70,
     },
   },
-  moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
+  moduleFileExtensions: ['js', 'jsx', 'json', 'ts', 'tsx'],
   setupFiles: [path.resolve(__dirname, 'setupTests.js')],
   testEnvironment: 'jsdom',
   testMatch: [
     '<rootDir>/src/**/__tests__/**/*.js?(x)',
-    '<rootDir>/src/**/?(*.)(spec|test).js?(x)'
+    '<rootDir>/src/**/?(*.)(spec|test).js?(x)',
   ],
-  transforms: {
+  transform: {
     '^.+\\.(js|jsx)$': path.resolve(__dirname, 'babelTransform.js'),
     '^.+\\.s?css$': path.resolve(__dirname, 'cssTransform.js'),
-    '^(?!.*\\.(js|jsx|css|json|png|svg)$)': path.resolve(__dirname, 'fileTransform.js'),
+    '^(?!.*\\.(js|jsx|css|json)$)': path.resolve(__dirname, 'fileTransform.js'),
   },
-  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
+  setupFilesAfterEnv: [
+    '@testing-library/jest-dom/extend-expect',
+  ],
+
   rootDir: process.cwd(),
-}
+};
